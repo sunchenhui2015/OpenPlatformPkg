@@ -54,7 +54,7 @@
 
   SerdesLib|OpenPlatformPkg/Chips/Hisilicon/Binary/Pv660/Library/Pv660Serdes/Pv660SerdesLib.inf
 
-  RealTimeClockLib|OpenPlatformPkg/Chips/Hisilicon/Library/VirtualRealTimeClockLib/RealTimeClockLib.inf
+  RealTimeClockLib|OpenPlatformPkg/Chips/Hisilicon/Library/DS3231RealTimeClockLib/DS3231RealTimeClockLib.inf
   OemMiscLib|OpenPlatformPkg/Platforms/Hisilicon/D02/Library/OemMiscLibD02/OemMiscLibD02.inf
   OemAddressMapLib|OpenPlatformPkg/Platforms/Hisilicon/Binary/D02/Library/AddressMapPv660D02/OemAddressMapPv660D02.inf
   PlatformSysCtrlLib|OpenPlatformPkg/Chips/Hisilicon/Binary/Pv660/Library/PlatformSysCtrlLibPv660/PlatformSysCtrlLibPv660.inf
