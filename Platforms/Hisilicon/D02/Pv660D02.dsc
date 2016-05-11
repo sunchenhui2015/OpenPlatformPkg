@@ -249,10 +249,10 @@
   gHisiTokenSpaceGuid.PciHb0Rb3Base|0xb00a0000
 
   gHisiTokenSpaceGuid.PcdHb0Rb1PciRegionBaseAddress|0xb0000000
-  gHisiTokenSpaceGuid.PcdHb0Rb1PciRegionSize|0x7feffff #pci域的长度 128M - 64K, 64k给io用
+  gHisiTokenSpaceGuid.PcdHb0Rb1PciRegionSize|0x7feffff
 
   gHisiTokenSpaceGuid.PcdHb0Rb2PciRegionBaseAddress|0xc0000000
-  gHisiTokenSpaceGuid.PcdHb0Rb2PciRegionSize|0x3feffff #pci域的长度 64M - 64K, 64k给io用
+  gHisiTokenSpaceGuid.PcdHb0Rb2PciRegionSize|0x3feffff
 
   gHisiTokenSpaceGuid.PcdHb0Rb1CpuMemRegionBase|0x22008000000
   #gHisiTokenSpaceGuid.PcdHb0Rb1CpuMemRegionBaseAddress|0x22008000000
