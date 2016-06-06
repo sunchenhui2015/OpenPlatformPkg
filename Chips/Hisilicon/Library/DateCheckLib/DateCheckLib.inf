@@ -1,0 +1,18 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = DateCheckLib
+  FILE_GUID                      = B1B07E01-6896-448C-8E75-F0E119ABDF49
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = DateCheckLib
+
+[Sources.common]
+  DateCheckLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  OpenPlatformPkg/Chips/Hisilicon/HisiPkg.dec
+
+[LibraryClasses]
+
+[Pcd]
