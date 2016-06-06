@@ -17,6 +17,11 @@
 #include <Protocol/PciRootBridgeIo.h>
 
 UINT32 mUsbMemBase;
+UINTN mSegmentNumber  = 0;
+// Use 0xFF for the virtual PCI devices
+UINTN mBusNumber      = 0xFF;
+UINTN mDeviceNumber   = 0;
+UINTN mFunctionNumber = 0;
 
 typedef struct {
   EFI_PHYSICAL_ADDRESS              HostAddress;
@@ -262,9 +267,10 @@ EhciPciIoPciRead (
   UINT32 i;
   UINT8 *DataPtr;
 
+  Width     = Width & 0x03;
 
   if (Offset < sizeof (EHCI_PCI_CONFIG) / sizeof (UINT8)){
-    Width     = Width & 0x03;
+  	
     DataPtr = (UINT8 *)(&mEhciPciConfig) + Offset;
 
     switch (Width) {
@@ -293,7 +299,23 @@ EhciPciIoPciRead (
     }
 
   } else {
-    *(UINT64 *)Buffer = 0xFFFFFFFF;
+    switch (Width) {
+    case EfiPciWidthUint8:
+        *(UINT8 *)Buffer = 0xFF;
+      break;
+    case EfiPciWidthUint16:
+        *(UINT16 *)Buffer = 0xFFFF;
+      break;
+    case EfiPciWidthUint32:
+        *(UINT32 *)Buffer = 0xFFFFFFFF;
+      break;
+    case EfiPciWidthUint64:
+        *(UINT64 *)Buffer = 0xFFFFFFFFFFFFFFFF;
+      break;	
+    default:
+      return EFI_INVALID_PARAMETER;
+    }
+	
   }
 
   return EFI_SUCCESS;
@@ -517,6 +539,11 @@ EhciPciIoGetLocation (
   )
 {
 
+  *SegmentNumber  = mSegmentNumber;
+  *BusNumber      = mBusNumber;
+  *DeviceNumber   = mDeviceNumber;
+  *FunctionNumber = mFunctionNumber;
+
   return EFI_SUCCESS;
 }
 
@@ -529,7 +556,9 @@ EhciPciIoAttributes (
   OUT UINT64                                   *Result OPTIONAL
   )
 {
-*Result = 0;
+  if (Result != NULL) {
+     *Result = 0;
+  }
   return EFI_SUCCESS;
 }
 
