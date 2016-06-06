@@ -18,8 +18,8 @@
 
 
 #include <Uefi.h>
+#include <Regs/HisiPcieV1RegOffset.h>
 #include "PcieKernelApi.h"
-#include "PcieRegOffset.h"
 
 //#define PCIE_ESL
 
