@@ -17,8 +17,8 @@
 #define __PCIE_INIT_LIB_H__
 
 #include <Uefi.h>
+#include <Regs/HisiPcieV1RegOffset.h>
 #include "PcieKernelApi.h"
-#include "PcieRegOffset.h"
 
 //#define PCIE_ESL
 
