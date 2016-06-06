@@ -65,6 +65,7 @@
 
   SerdesLib|OpenPlatformPkg/Chips/Hisilicon/Binary/Hi1610/Library/Hi1610Serdes/Hi1610SerdesLib.inf
 
+  DateCheckLib|OpenPlatformPkg/Chips/Hisilicon/Library/DateCheckLib/DateCheckLib.inf
   RealTimeClockLib|OpenPlatformPkg/Platforms/Hisilicon/D03/Library/DS3231RealTimeClockLib/DS3231RealTimeClockLib.inf
 
   OemMiscLib|OpenPlatformPkg/Platforms/Hisilicon/D03/Library/OemMiscLib2P/OemMiscLib2PHi1610.inf
