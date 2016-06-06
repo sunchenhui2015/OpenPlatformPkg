@@ -31,7 +31,7 @@
 
 [Protocols]
   gHisiBoardNicProtocolGuid       ##Produce
-  gOemXgeStatusProtocolGuid
+  gHisiBoardXgeStatusProtocolGuid
 
 [LibraryClasses]
   UefiDriverEntryPoint

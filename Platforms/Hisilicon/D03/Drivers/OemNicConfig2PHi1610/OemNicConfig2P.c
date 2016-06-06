@@ -234,7 +234,7 @@ EFIAPI OemSetMac2P (
   return EFI_SUCCESS;
 }
 
-HISI_BOARD_NIC_PROTOCOL mOemNicProtocol2P = {
+HISI_BOARD_NIC_PROTOCOL mHisiBoardNicProtocol2P = {
   .GetMac = OemGetMac2P,
   .SetMac = OemSetMac2P,
 };
@@ -276,7 +276,7 @@ VOID OemFeedbackXGeStatus(BOOLEAN IsLinkup, BOOLEAN IsActOK, UINT32 port)
     }
 }
 
-OEM_XGE_STATUS_PROTOCOL mOemXgeStatusProtocol2p = {
+HISI_BOARD_XGE_STATUS_PROTOCOL mHisiBoardXgeStatusProtocol2p = {
   .FeedbackXgeStatus = OemFeedbackXGeStatus,
 };
 
@@ -294,7 +294,7 @@ OemNicConfigEntry (
     &ImageHandle,
     &gHisiBoardNicProtocolGuid,
     EFI_NATIVE_INTERFACE,
-    &mOemNicProtocol2P
+    &mHisiBoardNicProtocol2P
     );
 
   if(EFI_ERROR(Status))
@@ -305,9 +305,9 @@ OemNicConfigEntry (
 
   Status = gBS->InstallProtocolInterface(
     &ImageHandle,
-    &gOemXgeStatusProtocolGuid,
+    &gHisiBoardXgeStatusProtocolGuid,
     EFI_NATIVE_INTERFACE,
-    &mOemXgeStatusProtocol2p
+    &mHisiBoardXgeStatusProtocol2p
     );
 
   if(EFI_ERROR(Status))
