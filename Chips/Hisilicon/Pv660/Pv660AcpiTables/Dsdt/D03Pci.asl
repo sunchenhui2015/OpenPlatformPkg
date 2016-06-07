@@ -69,7 +69,6 @@ Scope(_SB)
     Device (RES0)
     {
       Name (_HID, "HISI0081") // HiSi PCIe RC config base address
-      Name (_CID, "PNP0C02")  // Motherboard reserved resource
       Name (_CRS, ResourceTemplate (){
         Memory32Fixed (ReadWrite, 0xa0090000 , 0x10000)
       })
@@ -157,7 +156,6 @@ Scope(_SB)
     Device (RES1)
     {
       Name (_HID, "HISI0081") // HiSi PCIe RC config base address
-      Name (_CID, "PNP0C02")  // Motherboard reserved resource
       Name (_CRS, ResourceTemplate (){
         Memory32Fixed (ReadWrite, 0xa0200000 , 0x10000)
       })
@@ -245,7 +243,6 @@ Scope(_SB)
     Device (RES2)
     {
       Name (_HID, "HISI0081") // HiSi PCIe RC config base address
-      Name (_CID, "PNP0C02")  // Motherboard reserved resource
       Name (_CRS, ResourceTemplate (){
         Memory32Fixed (ReadWrite, 0xa00a0000, 0x10000)
       })
