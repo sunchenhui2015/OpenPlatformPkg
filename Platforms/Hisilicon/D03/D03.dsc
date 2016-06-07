@@ -507,7 +507,6 @@
   OpenPlatformPkg/Chips/Hisilicon/Drivers/UpdateFdtDxe/UpdateFdtDxe.inf
 
   #PCIe Support
-  OpenPlatformPkg/Chips/Hisilicon/Drivers/CpuIo2Dxe/CpuIo2Dxe.inf
   OpenPlatformPkg/Chips/Hisilicon/Hi1610/Drivers/PcieInit1610/PcieInitDxe.inf
   OpenPlatformPkg/Platforms/Hisilicon/D03/Drivers/PciPlatform/PciPlatform.inf
   OpenPlatformPkg/Chips/Hisilicon/Drivers/PciHostBridgeDxe/PciHostBridgeDxe.inf {

@@ -165,8 +165,6 @@ READ_LOCK_STATUS   = TRUE
 
   INF OpenPlatformPkg/Platforms/Hisilicon/D03/Drivers/OemNicConfig2PHi1610/OemNicConfig2P.inf
 
-  INF OpenPlatformPkg/Chips/Hisilicon/Drivers/CpuIo2Dxe/CpuIo2Dxe.inf
-
   INF OpenPlatformPkg/Chips/Hisilicon/Drivers/FlashFvbDxe/FlashFvbDxe.inf
   INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
