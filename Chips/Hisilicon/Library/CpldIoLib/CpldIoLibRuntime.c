@@ -52,7 +52,7 @@ CpldRuntimeLibConstructor (
     EFI_GCD_MEMORY_SPACE_DESCRIPTOR desp = {0};
 
     mCpldRegAddr = PcdGet64(PcdCpldBaseAddress);
-    DEBUG((EFI_D_ERROR,"Creat event for rtc. \r\n"));
+    DEBUG((EFI_D_INFO,"Creat event for rtc. \r\n"));
     Status = gDS->GetMemorySpaceDescriptor(mCpldRegAddr,&desp);
     if(EFI_ERROR(Status)){
         DEBUG ((EFI_D_ERROR, "[%a]:[%dL] GetMemorySpaceDescriptor failed: %r\n", __FUNCTION__, __LINE__, Status));
@@ -75,7 +75,7 @@ CpldRuntimeLibConstructor (
                     &gEfiEventVirtualAddressChangeGuid,
                     &mCpldVirtualAddressChangeEvent
                     );
-    DEBUG((EFI_D_ERROR,"Creat event for cpld %r . \r\n",Status));
+    DEBUG((EFI_D_INFO,"Creat event for cpld %r . \r\n",Status));
     ASSERT_EFI_ERROR (Status);
     return Status;
 }
