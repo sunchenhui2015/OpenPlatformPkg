@@ -433,7 +433,7 @@ STATIC EFI_STATUS prepare_cmd (
   while (slot->used) {
     if (READ_REG32(base, OQ_INT_SRC) & BIT(queue)) {
       // Required for data get ready in polling mode
-      MicroSecondDelay(2000);
+      MicroSecondDelay(500);
       break;
     }
     //Waiting slot->used change
