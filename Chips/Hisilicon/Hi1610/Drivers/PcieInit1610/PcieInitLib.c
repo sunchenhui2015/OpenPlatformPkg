@@ -43,7 +43,6 @@ extern PCIE_IATU_VA mPcieIatuTable;
 VOID PcieRegWrite(UINT32 Port, UINTN Offset, UINT32 Value)
 {
     RegWrite((UINT64)mPcieIntCfg.RegResource[Port] + Offset, Value);
-    //DEBUG((EFI_D_ERROR,"Write Port %d: 0x%lx Value is 0x%lx:\n",Port, mPcieIntCfg.RegResource[Port], Value));
 
 }
 
@@ -52,7 +51,6 @@ UINT32 PcieRegRead(UINT32 Port, UINTN Offset)
     UINT32 Value = 0;
 
     RegRead((UINT64)mPcieIntCfg.RegResource[Port] + Offset, Value);
-    //DEBUG((EFI_D_ERROR,"Read Port %d: 0x%lx Value is 0x%lx:\n",Port, mPcieIntCfg.RegResource[Port], Value));
     return Value;
 }
 
@@ -121,7 +119,6 @@ VOID PcieRxValidCtrl(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, BOOLEAN 
             */
             for (Loopcnt = 500 * Lanenum; Loopcnt > 0; Loopcnt--) {
                 Laneid = Loopcnt % Lanenum;
-                //Value = hisi_pcie_pcs_readl(pcie, 0xf4 + lane_id * 4);
                 RegRead(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0xf4 + Laneid * 0x4, Value);
                 if (((Value >> 21) & 0x7) >= 4)
                     Lockedcnt[Laneid]++;
@@ -137,24 +134,17 @@ VOID PcieRxValidCtrl(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, BOOLEAN 
                     MicroSecondDelay(500);
                 }
             if (Loopcnt == 0)
-                //dev_err(pcie->pp.dev, "pcs locked timeout!\n");
-                DEBUG((EFI_D_ERROR, "pcs locked timeout!\n"));
+                DEBUG((EFI_D_INFO, "pcs locked timeout!\n"));
             for (i = 0; i < Lanenum; i++) {
-                //Value = hisi_pcie_pcs_readl(pcie, 0x204 + i * 0x4);
                 RegRead(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i * 0x4, Value);
                 Value &= (~BIT14);
-                //hisi_pcie_pcs_writel(pcie, val, 0x204 + i * 0x4);
                 RegWrite(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i*0x4, Value);
                 }
             } else {
             for (i = 0; i < Lanenum; i++) {
-                //val = hisi_pcie_pcs_readl(pcie, 0x204 + i * 0x4);
                 RegRead(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i * 0x4, Value);
-                //val |= HIP06_PCS_RXVALID_CFG_EN;
                 Value |= BIT14;
                 Value &= (~BIT15);
-                //val &= (~HIP06_PCS_RXVALID_CFG_MASK);
-                //hisi_pcie_pcs_writel(pcie, val, 0x204 + i * 0x4);
                 RegWrite(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i*0x4, Value);
            }
         }
@@ -314,7 +304,6 @@ EFI_STATUS PcieLinkWidthSet(UINT32 Port, PCIE_PORT_WIDTH Width)
 
 EFI_STATUS PcieSetupRC(UINT32 Port, PCIE_PORT_WIDTH Width)
 {
-    //PCIE_EP_PORT_LOGIC4_U pcie_logic4;
     PCIE_EP_PORT_LOGIC22_U logic22;
     PCIE_EEP_PCI_CFG_HDR15_U hdr15;
     UINT32 Value = 0;
@@ -344,14 +333,12 @@ EFI_STATUS PcieSetupRC(UINT32 Port, PCIE_PORT_WIDTH Width)
     }
     else
     {
-        DEBUG((EFI_D_ERROR,"Width is not invalid\n"));
+        DEBUG((EFI_D_INFO,"Width is not invalid\n"));
     }
 
     PcieRegWrite(Port, PCIE_EP_PORT_LOGIC4_REG, Value);
 
     logic22.UInt32 = PcieRegRead(Port, PCIE_EP_PORT_LOGIC22_REG);
-    //logic22.UInt32 &= ~(0x1ff<<8);
-
     if(Width == PCIE_WITDH_X1)
     {
         logic22.Bits.pre_determ_num_of_lane = 1;
@@ -370,7 +357,7 @@ EFI_STATUS PcieSetupRC(UINT32 Port, PCIE_PORT_WIDTH Width)
     }
     else
     {
-        DEBUG((EFI_D_ERROR,"Width is not invalid\n"));
+        DEBUG((EFI_D_INFO,"Width is not invalid\n"));
     }
 
     logic22.UInt32 |= (0x100<<8);
@@ -406,7 +393,6 @@ EFI_STATUS PcieSetupRC(UINT32 Port, PCIE_PORT_WIDTH Width)
 EFI_STATUS PcieModeSet(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, PCIE_PORT_TYPE PcieType)
 {
     PCIE_CTRL_0_U str_pcie_ctrl_0;
-    //UINT32 Value = 0;
 
     if(Port >= PCIE_MAX_PORT_NUM)
     {
@@ -416,10 +402,6 @@ EFI_STATUS PcieModeSet(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, PCIE_P
     if (0x1610 == soctype)
     {
         RegWrite(PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + 0x1000 + 0xf8, 0x4 << 28);
-        //RegRead(PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + 0x1000 + 0x4, Value);
-        //Value |= BIT10 | BIT12 | BIT13;
-        //RegWrite(PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + 0x1000 + 0x4, Value);
-        // DEBUG((EFI_D_ERROR,"mfill 0x%lx 0x%lx\n",PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + 0x1000 + 0x4,Value));
     }
     else
     {
@@ -450,7 +432,6 @@ VOID PciePcsInit(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port)
         RegRead(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i*0x4, Value);
         Value |= (1 << 20);
         RegWrite(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x204 + i*0x4, Value);
-        //DEBUG((EFI_D_ERROR, "PCS Init Value is: 0x%x\n",Value));
         PcieRxValidCtrl(soctype, HostBridgeNum, Port, 0);
         RegWrite(PCIE_PHY_BASE_1610[HostBridgeNum][Port] + 0x264, 0x3D090);
     }
@@ -507,9 +488,6 @@ VOID PcieEqualization(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port)
     else
     PcieRegWrite(Port, 0x890, 0x1400);
     PcieRegWrite(Port, 0x894, 0xfd7);
-    //Value = PcieRegRead(Port, 0x80);
-    //Value |= 0x80;
-    //PcieRegWrite(Port, 0x80, Value);
 
     PcieRegWrite(Port, 0x89c, 0x0);
     PcieRegWrite(Port, 0x898, 0xfc00);
@@ -565,10 +543,6 @@ EFI_STATUS PciePortReset(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port)
         return EFI_INVALID_PARAMETER;
     }
 
-    //if(!PcieIsLinkDown(Port) && (mPcieIntCfg.PciePort[Port] == TRUE))
-    //{
-    //    PcieDisableItssm(Port);
-    //}
 
     if(PcieIsLinkUp(soctype, HostBridgeNum, Port) && mPcieIntCfg.PortIsInitilized[Port])
     {
@@ -759,18 +733,13 @@ EFI_STATUS HisiPcieClockCtrl(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, 
 {
     UINT32 reg_clock_disable;
     UINT32 reg_clock_enable;
-    //UINT32 reg_clock_status;
-    //UINT8  clock_ctrl_660 = 0x3;
-    //UINT8  clock_ctrl_1610 = 0x7;
 
     if (Port == 3) {
         reg_clock_disable = PCIE_SUBCTRL_SC_PCIE3_CLK_DIS_REG;
         reg_clock_enable = PCIE_SUBCTRL_SC_PCIE3_CLK_EN_REG;
-        //reg_clock_status = PCIE_SUBCTRL_SC_PCIE3_CLK_ST_REG;
     } else {
         reg_clock_disable = PCIE_SUBCTRL_SC_PCIE0_2_CLK_DIS_REG(Port);
         reg_clock_enable = PCIE_SUBCTRL_SC_PCIE0_2_CLK_EN_REG(Port);
-        //reg_clock_status = PCIE_SUBCTRL_SC_PCIE0_2_CLK_ST_REG(Port);
     }
 
     if (0x1610 == soctype)
@@ -885,7 +854,6 @@ VOID PcieSpdSet(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port, UINT8 Spd)
 VOID PcieWriteOwnConfig(UINT32 HostBridgeNum, UINT32 Port, UINT32 Offset, UINT32 Data)
 {
      UINT32 Value = 0;
-     //if (0x1610 == soctype)
      {
          RegRead(PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + (Offset & (~0x3)), Value);
          Value &= 0x0000ffff;
@@ -893,10 +861,6 @@ VOID PcieWriteOwnConfig(UINT32 HostBridgeNum, UINT32 Port, UINT32 Offset, UINT32
          RegWrite(PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][Port] + (Offset & (~0x3)), Value);
          return;
      }
-     //else
-    // {
-
-     //}
 }
 
 void PcieConfigContextHi1610(UINT32 soctype, UINT32 HostBridgeNum, UINT32 Port)
@@ -931,12 +895,12 @@ PciePortInit (
      if (0x1610 == soctype)
      {
          mPcieIntCfg.RegResource[PortIndex] = (VOID *)PCIE_APB_SLVAE_BASE_1610[HostBridgeNum][PortIndex];
-         DEBUG((EFI_D_ERROR, "Soc type is 1610\n"));
+         DEBUG((EFI_D_INFO, "Soc type is 1610\n"));
      }
      else
      {
          mPcieIntCfg.RegResource[PortIndex] = (VOID *)(UINTN)PCIE_REG_BASE(HostBridgeNum, PortIndex);
-         DEBUG((EFI_D_ERROR, "Soc type is 660\n"));
+         DEBUG((EFI_D_INFO, "Soc type is 660\n"));
      }
 
      /* assert reset signals */
@@ -954,27 +918,19 @@ PciePortInit (
          MicroSecondDelay(1000);
          Count++;
          if (Count >= 50) {
-            DEBUG((EFI_D_ERROR, "HostBridge %d, Port %d PLL Lock failed\n", HostBridgeNum, PortIndex));
+            DEBUG((EFI_D_INFO, "HostBridge %d, Port %d PLL Lock failed\n", HostBridgeNum, PortIndex));
             return PCIE_ERR_LINK_OVER_TIME;
          }
      }
-     //DEBUG((EFI_D_ERROR, "HostBridge %d, Port %d PLL Lock ok\n", HostBridgeNum, PortIndex));
      /* initialize phy */
      (VOID)PciePcsInit(soctype, HostBridgeNum, PortIndex);
 
-     //DEBUG((EFI_D_ERROR, "HostBridge %d, Pcie Port 0x%d Port pcs init ok.\n",HostBridgeNum, PortIndex));
-
      (VOID)PcieModeSet(soctype, HostBridgeNum, PortIndex,PcieCfg->PortInfo.PortType);
-     //DEBUG((EFI_D_ERROR, "HostBridge %d, Pcie Port 0x%d ModeSet ok.\n",HostBridgeNum, PortIndex));
-     //PcieDelay(50000);
      (VOID)PcieLaneReversalSet(soctype, HostBridgeNum, PortIndex);
      (VOID)PcieSpdSet(soctype, HostBridgeNum, PortIndex, 3);
-     // DEBUG((EFI_D_ERROR, "HostBridge %d, Pcie Port 0x%d Spd set ok.\n",HostBridgeNum, PortIndex));
      (VOID)PciePortNumSet(soctype, HostBridgeNum, PortIndex, 0);
-     //DEBUG((EFI_D_ERROR, "HostBridge %d, Pcie Port 0x%d Port num set ok.\n",HostBridgeNum, PortIndex));
      /* setup root complex */
      (VOID)PcieSetupRC(PortIndex,PcieCfg->PortInfo.PortWidth);
-     //DEBUG((EFI_D_ERROR, "HostBridge %d, Pcie Port 0x%d SetupRC ok.\n",HostBridgeNum, PortIndex));
 
      /* disable link up interrupt */
      (VOID)PcieMaskLinkUpInit(soctype, HostBridgeNum, PortIndex);
@@ -999,15 +955,13 @@ PciePortInit (
          MicroSecondDelay(1000);
          Count++;
          if (Count >= 1000) {
-            DEBUG((EFI_D_ERROR, "HostBridge %d, Port %d link up failed\n", HostBridgeNum, PortIndex));
+            DEBUG((EFI_D_INFO, "HostBridge %d, Port %d link up failed\n", HostBridgeNum, PortIndex));
             return PCIE_ERR_LINK_OVER_TIME;
          }
      }
-     DEBUG((EFI_D_ERROR, "HostBridge %d, Port %d Link up ok\n", HostBridgeNum, PortIndex));
+     DEBUG((EFI_D_INFO, "HostBridge %d, Port %d Link up ok\n", HostBridgeNum, PortIndex));
 
      PcieRegWrite(PortIndex, 0x8BC, 0);
-     //PcieRegWrite(PortIndex, 0x8, 0x6040000);
-     //PcieRegWrite(PortIndex, 0x80c, 0x208FF);
 
      return EFI_SUCCESS;
 }

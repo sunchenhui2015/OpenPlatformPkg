@@ -18,12 +18,6 @@
 #include <Library/PcdLib.h>
 #include <Library/OemMiscLib.h>
 
-/*
-PCIE_ROOT_BRIDGE_PROTOCOL gPcieRootBridge = {
-    PcieChangeRwMode,  //PcieChangeReadWriteMode
-    PcieSetDBICS2Enable //PcieSetDBICS2EnableDisable
-};
-*/
 
 extern VOID PcieRegWrite(UINT32 Port, UINTN Offset, UINT32 Value);
 extern EFI_STATUS PciePortReset(UINT32 HostBridgeNum, UINT32 Port);
@@ -86,7 +80,6 @@ PcieInitEntry (
 {
     UINT32             Port;
     EFI_STATUS         Status = EFI_SUCCESS;
-   // EFI_HANDLE         Handle;
     UINT32             HostBridgeNum = 0;
     UINT32             soctype = 0;
     UINT32       PcieRootBridgeMask;
@@ -121,20 +114,6 @@ PcieInitEntry (
         }
     }
 
-    //
-    // Make a new handle and install the protocol
-    //
-   // Handle = NULL;
-   // Status = gBS->InstallProtocolInterface (
-   //               &Handle,
-   //               &gEfiPcieRootBridgeProtocolGuid,
-   //               EFI_NATIVE_INTERFACE,
-   //               &gPcieRootBridge
-   //               );
-   // if (EFI_ERROR(Status))
-   // {
-   //     DEBUG((EFI_D_ERROR, " Install PcieRootBridge protocol fail\n "));
-   // }
 
     return EFI_SUCCESS;
 
