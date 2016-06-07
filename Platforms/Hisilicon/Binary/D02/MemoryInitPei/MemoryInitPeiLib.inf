@@ -42,7 +42,7 @@
   ArmPlatformLib
 
 [Guids]
-  gEfiMemoryTypeInformationGuid
+  gHisiEfiMemoryTypeInformationGuid
 
 [FeaturePcd]
   gEmbeddedTokenSpaceGuid.PcdPrePiProduceMemoryTypeInformationHob
