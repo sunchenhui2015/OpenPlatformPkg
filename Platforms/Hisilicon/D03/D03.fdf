@@ -168,10 +168,8 @@ READ_LOCK_STATUS   = TRUE
   INF OpenPlatformPkg/Chips/Hisilicon/Drivers/FlashFvbDxe/FlashFvbDxe.inf
   INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteDxe.inf
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
-  #INF MdeModulePkg/Universal/Variable/EmuRuntimeDxe/EmuVariableRuntimeDxe.inf
 
   INF MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf
-  #INF MdeModulePkg/Universal/MonotonicCounterRuntimeDxe/MonotonicCounterRuntimeDxe.inf
   INF EmbeddedPkg/EmbeddedMonotonicCounter/EmbeddedMonotonicCounter.inf
 
   INF EmbeddedPkg/ResetRuntimeDxe/ResetRuntimeDxe.inf
@@ -190,12 +188,9 @@ READ_LOCK_STATUS   = TRUE
   INF MdeModulePkg/Universal/SerialDxe/SerialDxe.inf
 
   # Simple TextIn/TextOut for UEFI Terminal
-  #INF EmbeddedPkg/SimpleTextInOutSerial/SimpleTextInOutSerial.inf
 
   INF ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
-  #INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   INF ArmPlatformPkg/Drivers/SP804TimerDxe/SP804TimerDxe.inf
-  #INF ArmPlatformPkg/Drivers/NorFlashDxe/NorFlashDxe.inf
 
   INF ArmPlatformPkg/Drivers/SP805WatchdogDxe/SP805WatchdogDxe.inf
 
@@ -240,7 +235,6 @@ READ_LOCK_STATUS   = TRUE
   #
   #ACPI
   #
-  #INF OpenPlatformPkg/Chips/Hisilicon/AcpiTables/AcpiTables.inf
   INF MdeModulePkg/Universal/Acpi/AcpiTableDxe/AcpiTableDxe.inf
   INF MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
 
@@ -264,7 +258,6 @@ READ_LOCK_STATUS   = TRUE
   INF MdeModulePkg/Universal/Network/Tcp4Dxe/Tcp4Dxe.inf
   INF MdeModulePkg/Universal/Network/Udp4Dxe/Udp4Dxe.inf
   INF MdeModulePkg/Universal/Network/UefiPxeBcDxe/UefiPxeBcDxe.inf
-  #INF MdeModulePkg/Universal/Network/VlanConfigDxe/VlanConfigDxe.inf
 
   INF OpenPlatformPkg/Chips/Hisilicon/Drivers/UpdateFdtDxe/UpdateFdtDxe.inf
 
@@ -290,7 +283,6 @@ READ_LOCK_STATUS   = TRUE
   #
   # Build Shell from latest source code instead of prebuilt binary
   #
-  #INF ShellBinPkg/UefiShell/UefiShell.inf
   INF ShellPkg/Application/Shell/Shell.inf
 
   #
@@ -324,7 +316,6 @@ READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
 
 !if $(EDK2_SKIP_PEICORE) == 1
-  #INF ArmPlatformPkg/PrePi/PeiUniCore.inf
   INF ArmPlatformPkg/PrePi/PeiMPCore.inf
 !else
   APRIORI PEI {
@@ -340,7 +331,6 @@ READ_LOCK_STATUS   = TRUE
   INF OpenPlatformPkg/Chips/Hisilicon/Drivers/VersionInfoPeim/VersionInfoPeim.inf
 
   INF OpenPlatformPkg/Platforms/Hisilicon/Binary/D03/Drivers/Ipmi/IpmiInterfacePei/IpmiInterfacePei.inf
-  #INF ArmPlatformPkg/MemoryInitPei/MemoryInitPeim.inf
   INF OpenPlatformPkg/Platforms/Hisilicon/Binary/D03/MemoryInitPei/MemoryInitPeim.inf
   INF ArmPkg/Drivers/CpuPei/CpuPei.inf
   INF MdeModulePkg/Universal/PCD/Pei/Pcd.inf

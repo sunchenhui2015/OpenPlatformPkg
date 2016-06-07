@@ -41,8 +41,6 @@
   NorFlashPlatformLib|ArmPlatformPkg/ArmVExpressPkg/Library/NorFlashArmVExpressLib/NorFlashArmVExpressLib.inf
   LcdPlatformLib|ArmPlatformPkg/ArmVExpressPkg/Library/PL111LcdArmVExpressLib/PL111LcdArmVExpressLib.inf
 
-  #DebugAgentTimerLib|ArmPlatformPkg/ArmVExpressPkg/Library/DebugAgentTimerLib/DebugAgentTimerLib.inf
-
 
   I2CLib|OpenPlatformPkg/Chips/Hisilicon/Library/I2CLib/I2CLib.inf
   TimerLib|ArmPkg/Library/ArmArchTimerLib/ArmArchTimerLib.inf
@@ -128,20 +126,14 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x2000
 
   # Stacks for MPCores in Secure World
-  #gArmPlatformTokenSpaceGuid.PcdCPUCoresSecStackBase|0x21000000
-  #gArmPlatformTokenSpaceGuid.PcdCPUCoreSecPrimaryStackSize|0x10000
   gArmPlatformTokenSpaceGuid.PcdCPUCoresSecStackBase|0x81000000
   gArmPlatformTokenSpaceGuid.PcdCPUCoreSecPrimaryStackSize|0x10000
 
   # Stacks for MPCores in Monitor Mode
-  #gArmPlatformTokenSpaceGuid.PcdCPUCoresSecMonStackBase|0x2E008000
-  #gArmPlatformTokenSpaceGuid.PcdCPUCoreSecMonStackSize|0x100
   gArmPlatformTokenSpaceGuid.PcdCPUCoresSecMonStackBase|0x8100FF00
   gArmPlatformTokenSpaceGuid.PcdCPUCoreSecMonStackSize|0x100
 
   # Stacks for MPCores in Normal World
-  #gArmPlatformTokenSpaceGuid.PcdCPUCoresStackBase|0x2E000000
-  #gArmPlatformTokenSpaceGuid.PcdCPUCorePrimaryStackSize|0x4000
   gArmPlatformTokenSpaceGuid.PcdCPUCoresStackBase|0x81000000
   gArmPlatformTokenSpaceGuid.PcdCPUCorePrimaryStackSize|0xFF00
 
@@ -177,7 +169,6 @@
 
   ## Serial Terminal
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x2F8
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x60300000
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|115200
 
   gHisiTokenSpaceGuid.PcdUartClkInHz|1846100
@@ -334,12 +325,7 @@
   #
   # SEC
   #
-  #HwPkg/Override/ArmPlatformPkg/Sec/Sec.inf {
-  #  <LibraryClasses>
-  #    # Use the implementation which set the Secure bits
-  #    ArmGicLib|ArmPkg/Drivers/ArmGic/ArmGicSecLib.inf
-  #}
-
+  
   #
   # PEI Phase modules
   #
@@ -432,7 +418,6 @@
 
   ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
 
-  #ArmPkg/Drivers/TimerDxe/TimerDxe
   ArmPlatformPkg/Drivers/SP804TimerDxe/SP804TimerDxe.inf
 
   ArmPlatformPkg/Drivers/SP805WatchdogDxe/SP805WatchdogDxe.inf
