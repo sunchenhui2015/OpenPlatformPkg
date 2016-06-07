@@ -74,14 +74,6 @@ Scope(_SB)
       })
     }
 
-    /*
-    Name (_DSD, Package () {
-      ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
-      Package () {
-        Package () {"rc-dbi", Package () { 0x0, 0xa0090000, 0x0, 0x10000 }},
-      }
-    })
-    */
     OperationRegion(SCTR, SystemMemory, 0xa009131c, 4)
     Field(SCTR, AnyAcc, NoLock, Preserve) {
       LSTA, 32,
@@ -160,14 +152,7 @@ Scope(_SB)
         Memory32Fixed (ReadWrite, 0xa0200000 , 0x10000)
       })
     }
-    /*
-    Name (_DSD, Package () {
-      ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
-      Package () {
-        Package () {"rc-dbi", Package () { 0x0, 0xa0200000, 0x0, 0x10000 }},
-      }
-    })
-    */
+    
     OperationRegion(SCTR, SystemMemory, 0xa020131c, 4)
     Field(SCTR, AnyAcc, NoLock, Preserve) {
       LSTA, 32,
@@ -247,14 +232,7 @@ Scope(_SB)
         Memory32Fixed (ReadWrite, 0xa00a0000, 0x10000)
       })
     }
-    /*
-    Name (_DSD, Package () {
-      ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"),
-      Package () {
-        Package () {"rc-dbi", Package () { 0x0, 0xa00a0000, 0x0, 0x10000 }},
-      }
-    })
-    */
+    
     OperationRegion(SCTR, SystemMemory, 0xa00a131c, 4)
     Field(SCTR, AnyAcc, NoLock, Preserve) {
       LSTA, 32,

@@ -438,17 +438,12 @@ Scope(_SB)
                 // mac2: Hilink4 Lane2
                 // mac3: Hilink4 Lane3
                 Store (H4ST, Local1)
-                //ShiftRight (Local1, Local0, Local1)
-                //And (Local1, 1, Local1)
               }
               ElseIf (LLessEqual (Local0, 5))
               {
                 // mac4: Hilink3 Lane2
                 // mac5: Hilink3 Lane3
                 Store (H3ST, Local1)
-                //Subtract (Local0, 2, Local0)
-                //ShiftRight (Local1, Local0, Local1)
-                //And (Local1, 1, Local1)
               }
 
               Return (Local1)
