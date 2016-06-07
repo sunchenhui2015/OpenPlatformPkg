@@ -26,8 +26,17 @@
 
 #include <Library/OemMiscLib.h>
 
-#define TIMER_SUBCTRL_BASE   PcdGet64(PcdPeriSubctrlAddress)
-#define SC_TM_CLKEN0_REG     (0x2050)
+#define TIMER_SUBCTRL_BASE                              PcdGet64(PcdPeriSubctrlAddress)
+#define ALG_BASE                                        (0xA0000000)
+#define PERI_SUB_CTRL_BASE                              (0x80000000)
+#define SC_TM_CLKEN0_REG                                (0x2050)
+#define SYS_APB_IF_BASE                                 (0x10000)
+#define TSENSOR_REG                                     (0x5000)
+#define SC_ITS_M3_INT_MUX_SEL_REG                       (0x21F0)
+#define SC_HLLC_RESET_DREQ_REG                          (0xA8C)
+#define SC_ITS_M3_INT_MUX_SEL_VALUE                     (0xF)
+#define SC_HLLC_RESET_DREQ_VALUE                        (0x1f)
+#define TSENSOR_CONFIG_VALUE                            (0x1)
 
 VOID PlatformTimerStart (VOID)
 {
@@ -65,12 +74,16 @@ DEBUG((EFI_D_ERROR,"Done\n"));
     DEBUG((EFI_D_ERROR,"Done\n"));
 
     DEBUG((EFI_D_ERROR,"RTC CONFIG........."));
-    MmioWrite32(0xA00021F0, 0xF);
+
+    MmioWrite32(ALG_BASE + SC_ITS_M3_INT_MUX_SEL_REG, SC_ITS_M3_INT_MUX_SEL_VALUE);
+
     DEBUG((EFI_D_ERROR,"Done\n"));
 
     DEBUG((EFI_D_ERROR,"Tsensor CONFIG........."));
-    MmioWrite32(0x80010000 + 0x5000, 0x1);
-    MmioWrite32(0xA0000A8C, 0x1f);
+
+    MmioWrite32(PERI_SUB_CTRL_BASE + SYS_APB_IF_BASE + TSENSOR_REG, TSENSOR_CONFIG_VALUE);
+    MmioWrite32(ALG_BASE + SC_HLLC_RESET_DREQ_REG, SC_HLLC_RESET_DREQ_VALUE);
+
     DEBUG((EFI_D_ERROR,"Done\n"));
 
     DEBUG((EFI_D_ERROR,"Timer CONFIG........."));
