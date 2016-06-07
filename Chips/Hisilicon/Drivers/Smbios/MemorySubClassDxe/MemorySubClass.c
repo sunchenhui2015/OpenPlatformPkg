@@ -21,7 +21,6 @@ EFI_HII_HANDLE                  mHiiHandle;
 
 UINT8                           mMaxSkt;
 UINT8                           mMaxCh;
-//UINT8                           mMaxDimm;
 
 VOID
 SmbiosGetManufacturer (
@@ -95,8 +94,6 @@ SmbiosGetSerialNumber (
     return;
 }
 
-// uniBIOS_y00216284_000_start Issue ID 2015-7-31 >>>
-// Description:
 BOOLEAN
 IsDimmPresent (
   IN  pGBL_DATA          pGblData,
@@ -438,7 +435,6 @@ SmbiosAddType17Table (
     EFI_STRING                      PartNumberStr;
     EFI_STRING_ID                   DeviceLocator;
 
-    //Status              = EFI_SUCCESS;
     Type17Record        = NULL;
     DeviceLocatorStr    = NULL;
     BankLocatorStr      = NULL;
@@ -729,11 +725,9 @@ MemorySubClassEntryPoint(
     }
 
     mMaxSkt  = OemGetSocketNumber();
-    //mMaxCh   = PlatformGetDdrChannel();
     mMaxCh   = OemGetDdrChannel();
     // Get DIMM slot number on Socket 0 Channel 0
     // TODO: Assume all channels have same slot number
-    //mMaxDimm = OemGetDimmSlot(0, 0);
 
     Status = SmbiosAddType16Table (pGblData, &MemArraySmbiosHandle);
     if(EFI_ERROR(Status))

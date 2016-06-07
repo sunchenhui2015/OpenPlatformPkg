@@ -30,12 +30,12 @@
 #include <Library/UefiLib.h>
 #include <Library/HobLib.h>
 #include <Library/PrintLib.h>
-#include <Library/PcdLib.h>  //uniBIOS_y00216284_028_start DTS2015010906228 2015-4-17 >>>
+#include <Library/PcdLib.h>
 
 #include <Library/HwMemInitLib.h>
 #include <Guid/DebugMask.h>
 #include <Guid/MemoryMapData.h>
-#include <Library/PlatformSysCtrlLib.h> //uniBIOS_y00216284_018_start DTS2015010906228 2015-1-13
+#include <Library/PlatformSysCtrlLib.h>
 #include <Library/OemMiscLib.h>
 
 //

@@ -134,7 +134,6 @@ MISC_SMBIOS_TABLE_FUNCTION(MiscSystemManufacturer)
 
     SmbiosRecord->Hdr.Length = sizeof (SMBIOS_TABLE_TYPE1);
 
-    //(VOID)CopyMem((UINT8 *) (&SmbiosRecord->Uuid), sizeof(EFI_GUID), &InputData->Uuid, sizeof(EFI_GUID));
     SmbiosRecord->Uuid = InputData->Uuid;
     Status = GetUuidType1 (&Uuid);
     if (!EFI_ERROR (Status))

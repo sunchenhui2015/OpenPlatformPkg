@@ -85,19 +85,16 @@
 [Pcd]
   gArmTokenSpaceGuid.PcdFdSize
   gHisiTokenSpaceGuid.PcdFirmwareVendor
-  gHisiTokenSpaceGuid.PcdBiosVersionString  # uniBIOS-y00216284-101 DTS2015100901937 2015-10-10 <<<
+  gHisiTokenSpaceGuid.PcdBiosVersionString
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareReleaseDateString
 
-  #uniBIOS_y00216284_018_start DTS2015010906228 2015-1-13
   gHisiTokenSpaceGuid.PcdSystemProductName
   gHisiTokenSpaceGuid.PcdSystemVersion
   gHisiTokenSpaceGuid.PcdBaseBoardProductName
   gHisiTokenSpaceGuid.PcdBaseBoardVersion
   gArmTokenSpaceGuid.PcdFdBaseAddress
 
-  #gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString
   gHisiTokenSpaceGuid.PcdBiosVersionForBmc
-  # uniBIOS_y00216284_084_end 2015-9-10 <<<
 
   gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLang
 

@@ -32,11 +32,6 @@ Based on files under Nt32Pkg/MiscSubClassPlatformDxe/
   MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE32, MiscBootInformation, MiscBootInformation)
   MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE38, MiscIpmiDeviceInformation, MiscIpmiDeviceInformation)
 
-  //MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE9,  MiscSystemSlotDesignationPcie0, MiscSystemSlotDesignation)
-  //MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE9,  MiscSystemSlotDesignationPcie1, MiscSystemSlotDesignation)
-  //MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE9,  MiscSystemSlotDesignationPcie2, MiscSystemSlotDesignation)
-  //MISC_SMBIOS_TABLE_EXTERNS(SMBIOS_TABLE_TYPE9,  MiscSystemSlotDesignationPcie3, MiscSystemSlotDesignation)
-
 
 EFI_MISC_SMBIOS_DATA_TABLE mSmbiosMiscDataTable[] = {
   // Type0
@@ -53,11 +48,6 @@ EFI_MISC_SMBIOS_DATA_TABLE mSmbiosMiscDataTable[] = {
   MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscBootInformation, MiscBootInformation),
   // Type38
   MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscIpmiDeviceInformation, MiscIpmiDeviceInformation),
-
-  //MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscSystemSlotDesignationPcie0, MiscSystemSlotDesignation),
-  //MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscSystemSlotDesignationPcie1, MiscSystemSlotDesignation),
-  //MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscSystemSlotDesignationPcie2, MiscSystemSlotDesignation),
-  //MISC_SMBIOS_TABLE_ENTRY_DATA_AND_FUNCTION(MiscSystemSlotDesignationPcie3, MiscSystemSlotDesignation),
 };
 
 

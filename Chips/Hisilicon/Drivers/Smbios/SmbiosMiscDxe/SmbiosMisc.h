@@ -38,8 +38,6 @@ Based on files under Nt32Pkg/MiscSubClassPlatformDxe/
 #include <Library/UefiLib.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 #include <Guid/DebugMask.h>
-//#include <Library/IpmiCmd.h>
-//#include <Library/IpmiLib.h>
 
 #include <Library/PrintLib.h>
 

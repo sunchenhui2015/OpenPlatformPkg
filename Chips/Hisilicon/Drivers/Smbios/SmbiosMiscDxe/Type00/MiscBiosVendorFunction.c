@@ -136,7 +136,6 @@ MISC_SMBIOS_TABLE_FUNCTION(MiscBiosVendor)
         HiiSetString (mHiiHandle, TokenToUpdate, Vendor, NULL);
     }
 
-    //Version = (CHAR16 *) PcdGetPtr (PcdFirmwareVersionString);
     Version = (CHAR16 *) PcdGetPtr (PcdBiosVersionForBmc);
     if (StrLen (Version) > 0)
     {

@@ -491,7 +491,6 @@ AddSmbiosProcessorTypeTable (
     STRING_REF                  TokenToUpdate;
 
     Type4Record         = NULL;
-    //ProcessorSocketStr  = NULL;
     ProcessorManuStr    = NULL;
     ProcessorVersionStr = NULL;
     SerialNumberStr     = NULL;
@@ -571,7 +570,6 @@ AddSmbiosProcessorTypeTable (
         goto Exit;
     }
 
-    //ProcessorSocketStrLen = UnicodeSPrint (ProcessorSocketStr, StringBufferSize, L"SOCKET %x", ProcessorNumber);
     ProcessorSocketStrLen = UnicodeSPrint (ProcessorSocketStr, StringBufferSize, L"CPU%02d", ProcessorNumber + 1);
 
     // Processor Manufacture
@@ -680,7 +678,6 @@ ProcessorSubClassEntryPoint(
   )
 {
     EFI_STATUS                      Status;
-    //EFI_HII_HANDLE                  HiiHandle;
     UINT32                          SocketIndex;
 
     //

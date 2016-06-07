@@ -27,7 +27,7 @@
   ProcessorSubClass.c
 
 [Packages]
-  ArmPkg/ArmPkg.dec  # uniBIOS-y00216284-105_start DTS2015111001703 2015-11-10 <<<
+  ArmPkg/ArmPkg.dec
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
   IntelFrameworkPkg/IntelFrameworkPkg.dec
