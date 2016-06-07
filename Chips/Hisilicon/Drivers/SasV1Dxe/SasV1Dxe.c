@@ -192,10 +192,6 @@
 #define lower_32_bits(n) ((UINT32)(n))
 #define MAX_TARGET_ID 4
 
-// The time between interrupt polls, in units of 100 nanoseconds
-// 100ms
-#define SAS_INTERRUPT_POLL_PERIOD (100 * 10000U)
-
 // Generic HW DMA host memory structures
 struct hisi_sas_cmd_hdr {
     UINT32 dw0;
@@ -432,11 +428,14 @@ STATIC EFI_STATUS prepare_cmd (
   // Wait for slot free, dma completed
   while (slot->used) {
     if (READ_REG32(base, OQ_INT_SRC) & BIT(queue)) {
-      // Required for data get ready in polling mode
-      MicroSecondDelay(500);
-      break;
+       // Update read point
+       WRITE_REG32(base, COMPL_Q_0_RD_PTR + (0x14 * queue), w);
+       // Clear int
+       WRITE_REG32(base, OQ_INT_SRC, BIT(queue));
+       slot->used = FALSE;
+       break;
     }
-    //Waiting slot->used change
+    //Wait for status change
     NanoSecondDelay (100);
   }
 
@@ -453,67 +452,6 @@ STATIC EFI_STATUS prepare_cmd (
     MicroSecondDelay(1000000);
   }
   return EFI_SUCCESS;
-}
-
-// Instead of actually registering interrupt handlers, we poll the controller's
-//  interrupt source register in this function.
-STATIC
-VOID
-CheckInterrupts (
-  IN EFI_EVENT  Event,
-  IN VOID      *Context
-  )
-{
-  SAS_V1_INFO *SasV1Info = (SAS_V1_INFO *) Context;;
-  struct hisi_hba *hba = SasV1Info->hba;
-  struct hisi_sas_slot *slot;
-  int i, queue = 0;
-  UINT32 val, base = hba->base;
-
-  // Check data irq
-  val = READ_REG32(base, OQ_INT_SRC);
-  if (val) {
-    UINT32 rd, wr;
-
-    for (i = 0; i < QUEUE_CNT; i++) {
-      if (val & BIT(i)) {
-        queue = i;
-        break;
-      }
-    }
-
-    rd = READ_REG32(base, COMPL_Q_0_RD_PTR + (0x14 * queue));
-    wr = READ_REG32(base, COMPL_Q_0_WR_PTR + (0x14 * queue));
-
-    while (rd != wr) {
-      struct hisi_sas_complete_hdr *complete_hdr;
-      int idx;
-      UINT32 data;
-
-      complete_hdr = &hba->complete_hdr[queue][rd];
-      data = complete_hdr->data;
-      idx = (data & CMPLT_HDR_IPTT_MSK) >> CMPLT_HDR_IPTT_OFF;
-      slot = &hba->slots[idx];
-      slot->used = FALSE;
-      if (++rd >= QUEUE_SLOTS)
-        rd = 0;
-
-      if (data & CMPLT_HDR_ERR_RCRD_XFRD_MSK) {
-        DEBUG ((EFI_D_VERBOSE, "CMPLT_HDR_ERR_RCRD_XFRD_MSK data=0x%x\n", data));
-        DEBUG ((EFI_D_VERBOSE, "slot->sts[0]=0x%x\n", slot->sts->status[0]));
-        DEBUG ((EFI_D_VERBOSE, "slot->sts[1]=0x%x\n", slot->sts->status[1]));
-        DEBUG ((EFI_D_VERBOSE, "slot->sts[2]=0x%x\n", slot->sts->status[2]));
-      }
-    }
-    // Update read point
-    WRITE_REG32(base, COMPL_Q_0_RD_PTR + (0x14 * queue), rd);
-    // Clear int
-    WRITE_REG32(base, OQ_INT_SRC, val);
-
-    // Update slot->used
-    MemoryFence();
-  }
-
 }
 
 STATIC VOID hisi_sas_v1_init(struct hisi_hba *hba, PLATFORM_SAS_PROTOCOL *plat)
@@ -540,6 +478,9 @@ STATIC VOID hisi_sas_v1_init(struct hisi_hba *hba, PLATFORM_SAS_PROTOCOL *plat)
       if (!(dma_tx_status & DMA_TX_STATUS_BUSY) &&
         !(dma_rx_status & DMA_RX_STATUS_BUSY))
         break;
+
+        // Wait for status change
+        NanoSecondDelay (100);
     }
   }
 
@@ -548,6 +489,9 @@ STATIC VOID hisi_sas_v1_init(struct hisi_hba *hba, PLATFORM_SAS_PROTOCOL *plat)
     UINT32 axi_status = READ_REG32(base, AXI_CFG);
     if (axi_status == 0)
       break;
+
+    // Wait for status change
+    NanoSecondDelay (100);
   }
 
   plat->Init(plat);
@@ -983,22 +927,6 @@ SasDriverBindingStart (
                 NULL);
   ASSERT_EFI_ERROR (Status);
 
-  // Register a timer event so CheckInterupts gets called periodically
-  Status = gBS->CreateEvent (
-                  EVT_TIMER | EVT_NOTIFY_SIGNAL,
-                  TPL_CALLBACK,
-                  CheckInterrupts,
-                  SasV1Info,
-                  &SasV1Info->TimerEvent
-                  );
-  ASSERT_EFI_ERROR (Status);
-
-  Status = gBS->SetTimer (
-                  SasV1Info->TimerEvent,
-                  TimerPeriodic,
-                  SAS_INTERRUPT_POLL_PERIOD
-                  );
-  ASSERT_EFI_ERROR (Status);
   return EFI_SUCCESS;
 }
 
