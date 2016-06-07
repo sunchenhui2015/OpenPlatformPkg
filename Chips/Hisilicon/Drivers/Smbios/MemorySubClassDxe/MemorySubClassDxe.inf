@@ -51,7 +51,7 @@
 [Pcd]
 
 [Guids]
-   gEfiMemoryMapGuid
+   gHisiEfiMemoryMapGuid
 
 [Depex]
   gEfiSmbiosProtocolGuid

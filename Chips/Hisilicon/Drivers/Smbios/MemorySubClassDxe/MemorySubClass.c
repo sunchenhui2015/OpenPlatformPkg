@@ -700,7 +700,7 @@ MemorySubClassEntryPoint(
     EFI_SMBIOS_HANDLE               MemArraySmbiosHandle;
     UINT8                           Skt, Ch, Dimm;
 
-    GuidHob = GetFirstGuidHob(&gEfiMemoryMapGuid);
+    GuidHob = GetFirstGuidHob(&gHisiEfiMemoryMapGuid);
     if(NULL == GuidHob)
     {
         DEBUG((EFI_D_ERROR, "Could not get MemoryMap Guid hob.  %r\n"));
