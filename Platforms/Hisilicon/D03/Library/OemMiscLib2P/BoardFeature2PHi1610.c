@@ -34,17 +34,11 @@ I2C_DEVICE gDS3231RtcDevice = {
 
 SERDES_POLARITY_INVERT gSerdesPolarityTxDesc[] =
 {
-    //{3, 2},
-    //{4, 1},
-    //{4, 2},
-    //{4, 3},
     {SERDES_INVALID_MACRO_ID, SERDES_INVALID_LANE_NUM}
 };
 
 SERDES_POLARITY_INVERT gSerdesPolarityRxDesc[] =
 {
-    //{4, 0},
-    //{4, 2},
     {SERDES_INVALID_MACRO_ID, SERDES_INVALID_LANE_NUM}
 };
 
