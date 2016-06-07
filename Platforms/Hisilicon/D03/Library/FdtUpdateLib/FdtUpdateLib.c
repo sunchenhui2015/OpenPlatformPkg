@@ -21,15 +21,12 @@
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/FdtUpdateLib.h>
 #include <PlatformArch.h>
-//#include <PlatformArchRestricted.h>
 #include <Library/PcdLib.h>
 #include <Library/PlatformSysCtrlLib.h>
-//#include <Library/PlatformSysCtrlLibRestricted.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Protocol/HisiBoardNicProtocol.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 #include <Library/OemMiscLib.h>
-//#include <SetupVariable.h>
 
 typedef union AA_DAW
 {
@@ -123,7 +120,7 @@ GetMacAddress (UINT32 Port)
     gMacAddress[0].data3=Mac.Addr[3];
     gMacAddress[0].data4=Mac.Addr[4];
     gMacAddress[0].data5=Mac.Addr[5];
-    DEBUG((EFI_D_ERROR, "Port%d:0x%x 0x%x 0x%x 0x%x 0x%x 0x%x\n",
+    DEBUG((EFI_D_INFO, "Port%d:0x%x 0x%x 0x%x 0x%x 0x%x 0x%x\n",
         Port,gMacAddress[0].data0,gMacAddress[0].data1,gMacAddress[0].data2,
         gMacAddress[0].data3,gMacAddress[0].data4,gMacAddress[0].data5));
 
@@ -146,7 +143,7 @@ DelPhyhandleUpdateMacAddress(IN VOID* Fdt)
     node = fdt_subnode_offset(Fdt, 0, "soc");
     if (node < 0)
     {
-        DEBUG ((EFI_D_ERROR, "can not find soc root node\n"));
+        DEBUG ((EFI_D_INFO, "can not find soc root node\n"));
         return EFI_INVALID_PARAMETER;
     }
     else
@@ -160,8 +157,8 @@ DelPhyhandleUpdateMacAddress(IN VOID* Fdt)
 
                 if (ethernetnode < 0)
                 {
-                    DEBUG ((EFI_D_ERROR, "Can not find ethernet@%d node\n",port));
-                    DEBUG ((EFI_D_ERROR, "Suppose port %d is not enabled.\n", port));
+                    DEBUG ((EFI_D_INFO, "Can not find ethernet@%d node\n",port));
+                    DEBUG ((EFI_D_INFO, "Suppose port %d is not enabled.\n", port));
                     continue;
                 }
                 m_prop = fdt_get_property_w(Fdt, ethernetnode, "local-mac-address", &m_oldlen);
@@ -252,7 +249,7 @@ EFI_STATUS UpdateMemoryNode(VOID* Fdt)
     node = GetMemoryNode(Fdt);
     if (node < 0)
     {
-        DEBUG((EFI_D_ERROR,"Can not find memory node\n"));
+        DEBUG((EFI_D_INFO,"Can not find memory node\n"));
         return EFI_NOT_FOUND;
     }
     MemoryMap = NULL;
@@ -264,7 +261,6 @@ EFI_STATUS UpdateMemoryNode(VOID* Fdt)
     {
         // The UEFI specification advises to allocate more memory for the MemoryMap buffer between successive
         // calls to GetMemoryMap(), since allocation of the new buffer may potentially increase memory map size.
-        //DEBUG ((EFI_D_ERROR, "MemoryMapsize: 0x%lx\n",MemoryMapSize));
         Pages0 = EFI_SIZE_TO_PAGES (MemoryMapSize) + 1;
         MemoryMap = AllocatePages (Pages0);
         if (MemoryMap == NULL)
@@ -283,7 +279,7 @@ EFI_STATUS UpdateMemoryNode(VOID* Fdt)
     }
     else
     {
-        DEBUG ((EFI_D_ERROR, "FdtUpdateLib GetmemoryMap Status: %r\n",Status));
+        DEBUG ((EFI_D_INFO, "FdtUpdateLib GetmemoryMap Status: %r\n",Status));
         return EFI_ABORTED;
     }
 
