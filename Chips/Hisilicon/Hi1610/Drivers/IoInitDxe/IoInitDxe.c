@@ -28,7 +28,7 @@ ExitBootServicesEventSmmu (
   )
 {
   SmmuConfigForOS ();
-  DEBUG((EFI_D_ERROR,"SMMU ExitBootServicesEvent\n"));
+  DEBUG((EFI_D_INFO,"SMMU ExitBootServicesEvent\n"));
 }
 
 
